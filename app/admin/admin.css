@@ -1,0 +1,6 @@
+.admin-layout {
+  min-height: 100vh;
+  background-color: #f1f5f9; /* Slate 100 */
+}
+
+/* Base styles specific to admin if needed to override */

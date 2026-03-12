@@ -1,0 +1,18 @@
+.footer {
+  background-color: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-top: auto;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-subtext {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
