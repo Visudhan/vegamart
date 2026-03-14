@@ -1,7 +1,15 @@
+'use client';
+
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import './Footer.css';
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isAdmin = pathname && pathname.startsWith('/admin');
+
+  if (isAdmin) return null;
+
   return (
     <footer className="footer">
       <div className="container footer-container">
