@@ -15,10 +15,6 @@ export default function CategoryManagement() {
   const [isAdding, setIsAdding] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
   async function fetchCategories() {
     setIsLoading(true);
     const { data, error } = await supabase.from('categories').select('*').order('name');
@@ -30,6 +26,11 @@ export default function CategoryManagement() {
     }
     setIsLoading(false);
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchCategories();
+  }, []);
 
   async function handleAddCategory(e) {
     e.preventDefault();

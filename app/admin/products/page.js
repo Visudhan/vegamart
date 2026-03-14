@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -25,10 +26,6 @@ export default function ProductManagement() {
   });
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   async function fetchData() {
     setIsLoading(true);
     const [prodRes, catRes] = await Promise.all([
@@ -40,6 +37,11 @@ export default function ProductManagement() {
     setCategories(catRes.data || []);
     setIsLoading(false);
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData();
+  }, []);
 
   const openAddModal = () => {
     setEditingProduct(null);

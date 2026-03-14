@@ -10,10 +10,6 @@ export default function OrderManagement() {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
   async function fetchOrders() {
     setIsLoading(true);
     // Fetch orders with their items and related products
@@ -35,6 +31,11 @@ export default function OrderManagement() {
     }
     setIsLoading(false);
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchOrders();
+  }, []);
 
   const handleStatusChange = async (orderId, newStatus) => {
     const { error } = await supabase

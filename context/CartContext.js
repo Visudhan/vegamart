@@ -13,6 +13,7 @@ export function CartProvider({ children }) {
     const savedCart = localStorage.getItem('freshmart_cart');
     if (savedCart) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCartItems(JSON.parse(savedCart));
       } catch (e) {
         console.error("Could not parse cart", e);

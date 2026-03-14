@@ -88,7 +88,7 @@ export default function Home() {
         {filteredProducts.length === 0 ? (
           <div className="empty-state">
             <h3>No products found</h3>
-            <p>We couldn't find any products matching your search criteria.</p>
+            <p>We couldn&apos;t find any products matching your search criteria.</p>
             <button className="btn btn-secondary mt-4" onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}>
               Clear Filters
             </button>
