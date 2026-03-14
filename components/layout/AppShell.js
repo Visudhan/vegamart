@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Cart from '@/components/ui/Cart';
 import Modal from '@/components/ui/Modal';
 import CheckoutForm from '@/components/ui/CheckoutForm';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { formatWhatsAppMessage, openWhatsApp } from '@/lib/whatsapp';
 
@@ -11,6 +12,9 @@ export default function AppShell({ children }) {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { cartItems, cartTotal, setIsCartOpen, clearCart } = useCart();
+  const pathname = usePathname();
+
+  const isAdmin = pathname && pathname.startsWith('/admin');
 
   const handleOpenCheckout = () => {
     setIsCartOpen(false);
@@ -53,18 +57,22 @@ export default function AppShell({ children }) {
   return (
     <>
       {children}
-      <Cart onCheckout={handleOpenCheckout} />
-      <Modal 
-        isOpen={isCheckoutOpen} 
-        onClose={() => setIsCheckoutOpen(false)}
-        title="Complete Your Order"
-      >
-        <CheckoutForm 
-          onSubmit={handleCheckoutSubmit} 
-          onCancel={() => setIsCheckoutOpen(false)}
-          isSubmitting={isSubmitting}
-        />
-      </Modal>
+      {!isAdmin && (
+        <>
+          <Cart onCheckout={handleOpenCheckout} />
+          <Modal 
+            isOpen={isCheckoutOpen} 
+            onClose={() => setIsCheckoutOpen(false)}
+            title="Complete Your Order"
+          >
+            <CheckoutForm 
+              onSubmit={handleCheckoutSubmit} 
+              onCancel={() => setIsCheckoutOpen(false)}
+              isSubmitting={isSubmitting}
+            />
+          </Modal>
+        </>
+      )}
     </>
   );
 }
