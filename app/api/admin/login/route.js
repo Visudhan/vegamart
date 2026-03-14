@@ -4,16 +4,22 @@ import { supabase } from '@/lib/supabaseClient';
 export async function POST(request) {
   try {
     const { password } = await request.json();
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-    
-    let isAuthorized = (password === adminPassword);
+    // 1. Check for custom password in DB first
+    const { data: customPass } = await supabase
+      .from('admin_settings')
+      .select('value')
+      .eq('key', 'admin_password')
+      .single();
 
-    if (!isAuthorized) {
-      // Check for custom password in DB
-      const { data: customPass } = await supabase.from('admin_settings').select('value').eq('key', 'admin_password').single();
-      if (customPass && password === customPass.value) {
-        isAuthorized = true;
-      }
+    let isAuthorized = false;
+
+    if (customPass) {
+      // If a custom password exists, ONLY use that
+      isAuthorized = (password === customPass.value);
+    } else {
+      // Fallback to environment variable or default only if no custom password is set
+      const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+      isAuthorized = (password === adminPassword);
     }
 
     if (isAuthorized) {
