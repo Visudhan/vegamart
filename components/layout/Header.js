@@ -2,16 +2,21 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import './Header.css';
 
 export default function Header() {
   const { cartCount, toggleCart } = useCart();
+  const pathname = usePathname();
+
+  const isAdmin = pathname && pathname.startsWith('/admin');
+  const logoHref = isAdmin ? '/admin/dashboard' : '/';
 
   return (
     <header className="header">
       <div className="container header-container">
-        <Link href="/" className="logo">
+        <Link href={logoHref} className="logo">
           VegaMart
         </Link>
         <div className="header-actions">
